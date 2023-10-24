@@ -13,7 +13,7 @@
           </elementProp>
           <elementProp name="password" elementType="Argument">
             <stringProp name="Argument.name">password</stringProp>
-            <stringProp name="Argument.value">${__P(password, Admin12345%%)}</stringProp>
+            <stringProp name="Argument.value">${__P(password, Admin123)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="hostname" elementType="Argument">
