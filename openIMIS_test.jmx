@@ -1,0 +1,1833 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.2">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="openIMIS Test Plan" enabled="true">
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="username" elementType="Argument">
+            <stringProp name="Argument.name">username</stringProp>
+            <stringProp name="Argument.value">${__P(username, Admin)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="password" elementType="Argument">
+            <stringProp name="Argument.name">password</stringProp>
+            <stringProp name="Argument.value">${__P(password, admin123)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="hostname" elementType="Argument">
+            <stringProp name="Argument.name">hostname</stringProp>
+            <stringProp name="Argument.value">${__P(hostname, localhost)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="port" elementType="Argument">
+            <stringProp name="Argument.name">port</stringProp>
+            <stringProp name="Argument.value">${__P(port, 3000)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="graphqlPath" elementType="Argument">
+            <stringProp name="Argument.name">graphqlPath</stringProp>
+            <stringProp name="Argument.value">${__P(port, api/graphql)}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="paginationOption1" elementType="Argument">
+            <stringProp name="Argument.name">paginationOption1</stringProp>
+            <stringProp name="Argument.value">10</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="paginationOption2" elementType="Argument">
+            <stringProp name="Argument.name">paginationOption2</stringProp>
+            <stringProp name="Argument.value">20</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="paginationOption3" elementType="Argument">
+            <stringProp name="Argument.name">paginationOption3</stringProp>
+            <stringProp name="Argument.value">50</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="paginationOption4" elementType="Argument">
+            <stringProp name="Argument.name">paginationOption4</stringProp>
+            <stringProp name="Argument.value">100</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="TS5 Products" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.delayedStart">false</boolProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="searchString" elementType="Argument">
+              <stringProp name="Argument.name">searchString</stringProp>
+              <stringProp name="Argument.value">&quot;a&quot;</stringProp>
+              <stringProp name="Argument.desc">Value used to in search params in Product query.</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="Authorization" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument" enabled="true">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;username&quot;: &quot;Admin&quot;,
+  &quot;password&quot;: &quot;admin123&quot;
+},&quot;query&quot;:&quot;mutation authenticate($username: String!, $password: String!) {\n            tokenAuth(username: $username, password: $password) {\n              refreshExpiresIn\n            }\n          }&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+          <stringProp name="HTTPSampler.port">${port}</stringProp>
+          <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+          <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+          <stringProp name="GraphQLHTTPSampler.query">mutation authenticate($username: String!, $password: String!) {
+            tokenAuth(username: $username, password: $password) {
+              refreshExpiresIn
+            }
+          }</stringProp>
+          <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;username&quot;: &quot;Admin&quot;,
+  &quot;password&quot;: &quot;admin123&quot;
+}</stringProp>
+          <boolProp name="HTTPSampler.image_parser">false</boolProp>
+          <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+          <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+          <boolProp name="HTTPSampler.md5">false</boolProp>
+          <intProp name="HTTPSampler.ipSourceType">0</intProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">content-type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+            <stringProp name="RegexExtractor.refname">jwtToken</stringProp>
+            <stringProp name="RegexExtractor.regex">JWT=(.*?);</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">NotFound</stringProp>
+            <stringProp name="RegexExtractor.match_number">1</stringProp>
+            <boolProp name="RegexExtractor.default_empty_value">false</boolProp>
+          </RegexExtractor>
+          <hashTree/>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Search Products" enabled="true">
+          <stringProp name="TestPlan.comments">Description:  Searching for new product for large datasets
+Prerequisites: Random data for products
+Steps: Login to web application with admin credentials -&gt; Go to Insurees under Insurees and Policies -&gt; Enter information in the search criteria fields
+Data Inputs: -
+Expected Outcomes: Frontend is loaded with insurees list matching search criteria
+Metrics to Monitor: response time, resources utilization
+Exit Criteria: response time, resources utilization is in specified norms
+</stringProp>
+        </GenericController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="Search Products paginated 10" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument" enabled="true">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;first&quot;: ${paginationOption1},
+  &quot;name&quot;: ${searchString}
+},&quot;query&quot;:&quot;query ($search: String, $first: Int, $last: Int, $before: String, $after: String, $code: String, $name: String, $dateFrom: DateTime, $dateTo: DateTime, $location: Int, $showHistory: Boolean) {\n  products(\n    search: $search\n    first: $first\n    last: $last\n    before: $before\n    after: $after\n    code_Icontains: $code\n    showHistory: $showHistory\n    name_Icontains: $name\n    dateFrom_Gte: $dateFrom\n    dateTo_Lte: $dateTo\n    location: $location\n  ) {\n    edges {\n      node {\n        ...ProductFragment\n      }\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    totalCount\n  }\n}\n\nfragment ProductFragment on ProductGQLType {\n  id\n  uuid\n  name\n  code\n  location {\n    id\n    name\n    uuid\n    code\n    parent {\n      id\n      name\n      uuid\n      code\n    }\n  }\n  dateFrom\n  dateTo\n  maxMembers\n  validityFrom\n  validityTo\n}&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+            <stringProp name="GraphQLHTTPSampler.query">query ($search: String, $first: Int, $last: Int, $before: String, $after: String, $code: String, $name: String, $dateFrom: DateTime, $dateTo: DateTime, $location: Int, $showHistory: Boolean) {
+  products(
+    search: $search
+    first: $first
+    last: $last
+    before: $before
+    after: $after
+    code_Icontains: $code
+    showHistory: $showHistory
+    name_Icontains: $name
+    dateFrom_Gte: $dateFrom
+    dateTo_Lte: $dateTo
+    location: $location
+  ) {
+    edges {
+      node {
+        ...ProductFragment
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}
+
+fragment ProductFragment on ProductGQLType {
+  id
+  uuid
+  name
+  code
+  location {
+    id
+    name
+    uuid
+    code
+    parent {
+      id
+      name
+      uuid
+      code
+    }
+  }
+  dateFrom
+  dateTo
+  maxMembers
+  validityFrom
+  validityTo
+}
+</stringProp>
+            <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;first&quot;: ${paginationOption1},
+  &quot;name&quot;: ${searchString}
+}</stringProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+              <collectionProp name="CookieManager.cookies">
+                <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                  <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                  <stringProp name="Cookie.domain">localhost</stringProp>
+                  <stringProp name="Cookie.path">/</stringProp>
+                  <boolProp name="Cookie.secure">false</boolProp>
+                  <longProp name="Cookie.expires">0</longProp>
+                  <boolProp name="Cookie.path_specified">true</boolProp>
+                  <boolProp name="Cookie.domain_specified">true</boolProp>
+                </elementProp>
+              </collectionProp>
+              <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+              <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+            </CookieManager>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="Search Products paginated 20" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument" enabled="true">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;first&quot;: ${paginationOption2},
+  &quot;name&quot;: ${searchString}
+},&quot;query&quot;:&quot;query ($search: String, $first: Int, $last: Int, $before: String, $after: String, $code: String, $name: String, $dateFrom: DateTime, $dateTo: DateTime, $location: Int, $showHistory: Boolean) {\n  products(\n    search: $search\n    first: $first\n    last: $last\n    before: $before\n    after: $after\n    code_Icontains: $code\n    showHistory: $showHistory\n    name_Icontains: $name\n    dateFrom_Gte: $dateFrom\n    dateTo_Lte: $dateTo\n    location: $location\n  ) {\n    edges {\n      node {\n        ...ProductFragment\n      }\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    totalCount\n  }\n}\n\nfragment ProductFragment on ProductGQLType {\n  id\n  uuid\n  name\n  code\n  location {\n    id\n    name\n    uuid\n    code\n    parent {\n      id\n      name\n      uuid\n      code\n    }\n  }\n  dateFrom\n  dateTo\n  maxMembers\n  validityFrom\n  validityTo\n}&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+            <stringProp name="GraphQLHTTPSampler.query">query ($search: String, $first: Int, $last: Int, $before: String, $after: String, $code: String, $name: String, $dateFrom: DateTime, $dateTo: DateTime, $location: Int, $showHistory: Boolean) {
+  products(
+    search: $search
+    first: $first
+    last: $last
+    before: $before
+    after: $after
+    code_Icontains: $code
+    showHistory: $showHistory
+    name_Icontains: $name
+    dateFrom_Gte: $dateFrom
+    dateTo_Lte: $dateTo
+    location: $location
+  ) {
+    edges {
+      node {
+        ...ProductFragment
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}
+
+fragment ProductFragment on ProductGQLType {
+  id
+  uuid
+  name
+  code
+  location {
+    id
+    name
+    uuid
+    code
+    parent {
+      id
+      name
+      uuid
+      code
+    }
+  }
+  dateFrom
+  dateTo
+  maxMembers
+  validityFrom
+  validityTo
+}
+</stringProp>
+            <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;first&quot;: ${paginationOption2},
+  &quot;name&quot;: ${searchString}
+}</stringProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+              <collectionProp name="CookieManager.cookies">
+                <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                  <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                  <stringProp name="Cookie.domain">localhost</stringProp>
+                  <stringProp name="Cookie.path">/</stringProp>
+                  <boolProp name="Cookie.secure">false</boolProp>
+                  <longProp name="Cookie.expires">0</longProp>
+                  <boolProp name="Cookie.path_specified">true</boolProp>
+                  <boolProp name="Cookie.domain_specified">true</boolProp>
+                </elementProp>
+              </collectionProp>
+              <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+              <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+            </CookieManager>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="Search Products paginated 50" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument" enabled="true">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;first&quot;: ${paginationOption3},
+  &quot;name&quot;: ${searchString}
+},&quot;query&quot;:&quot;query ($search: String, $first: Int, $last: Int, $before: String, $after: String, $code: String, $name: String, $dateFrom: DateTime, $dateTo: DateTime, $location: Int, $showHistory: Boolean) {\n  products(\n    search: $search\n    first: $first\n    last: $last\n    before: $before\n    after: $after\n    code_Icontains: $code\n    showHistory: $showHistory\n    name_Icontains: $name\n    dateFrom_Gte: $dateFrom\n    dateTo_Lte: $dateTo\n    location: $location\n  ) {\n    edges {\n      node {\n        ...ProductFragment\n      }\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    totalCount\n  }\n}\n\nfragment ProductFragment on ProductGQLType {\n  id\n  uuid\n  name\n  code\n  location {\n    id\n    name\n    uuid\n    code\n    parent {\n      id\n      name\n      uuid\n      code\n    }\n  }\n  dateFrom\n  dateTo\n  maxMembers\n  validityFrom\n  validityTo\n}&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+            <stringProp name="GraphQLHTTPSampler.query">query ($search: String, $first: Int, $last: Int, $before: String, $after: String, $code: String, $name: String, $dateFrom: DateTime, $dateTo: DateTime, $location: Int, $showHistory: Boolean) {
+  products(
+    search: $search
+    first: $first
+    last: $last
+    before: $before
+    after: $after
+    code_Icontains: $code
+    showHistory: $showHistory
+    name_Icontains: $name
+    dateFrom_Gte: $dateFrom
+    dateTo_Lte: $dateTo
+    location: $location
+  ) {
+    edges {
+      node {
+        ...ProductFragment
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}
+
+fragment ProductFragment on ProductGQLType {
+  id
+  uuid
+  name
+  code
+  location {
+    id
+    name
+    uuid
+    code
+    parent {
+      id
+      name
+      uuid
+      code
+    }
+  }
+  dateFrom
+  dateTo
+  maxMembers
+  validityFrom
+  validityTo
+}
+</stringProp>
+            <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;first&quot;: ${paginationOption3},
+  &quot;name&quot;: ${searchString}
+}</stringProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+              <collectionProp name="CookieManager.cookies">
+                <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                  <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                  <stringProp name="Cookie.domain">localhost</stringProp>
+                  <stringProp name="Cookie.path">/</stringProp>
+                  <boolProp name="Cookie.secure">false</boolProp>
+                  <longProp name="Cookie.expires">0</longProp>
+                  <boolProp name="Cookie.path_specified">true</boolProp>
+                  <boolProp name="Cookie.domain_specified">true</boolProp>
+                </elementProp>
+              </collectionProp>
+              <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+              <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+            </CookieManager>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="Search Products paginated 100" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument" enabled="true">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;first&quot;: ${paginationOption4},
+  &quot;name&quot;: ${searchString}
+},&quot;query&quot;:&quot;query ($search: String, $first: Int, $last: Int, $before: String, $after: String, $code: String, $name: String, $dateFrom: DateTime, $dateTo: DateTime, $location: Int, $showHistory: Boolean) {\n  products(\n    search: $search\n    first: $first\n    last: $last\n    before: $before\n    after: $after\n    code_Icontains: $code\n    showHistory: $showHistory\n    name_Icontains: $name\n    dateFrom_Gte: $dateFrom\n    dateTo_Lte: $dateTo\n    location: $location\n  ) {\n    edges {\n      node {\n        ...ProductFragment\n      }\n    }\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    totalCount\n  }\n}\n\nfragment ProductFragment on ProductGQLType {\n  id\n  uuid\n  name\n  code\n  location {\n    id\n    name\n    uuid\n    code\n    parent {\n      id\n      name\n      uuid\n      code\n    }\n  }\n  dateFrom\n  dateTo\n  maxMembers\n  validityFrom\n  validityTo\n}&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+            <stringProp name="GraphQLHTTPSampler.query">query ($search: String, $first: Int, $last: Int, $before: String, $after: String, $code: String, $name: String, $dateFrom: DateTime, $dateTo: DateTime, $location: Int, $showHistory: Boolean) {
+  products(
+    search: $search
+    first: $first
+    last: $last
+    before: $before
+    after: $after
+    code_Icontains: $code
+    showHistory: $showHistory
+    name_Icontains: $name
+    dateFrom_Gte: $dateFrom
+    dateTo_Lte: $dateTo
+    location: $location
+  ) {
+    edges {
+      node {
+        ...ProductFragment
+      }
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+  }
+}
+
+fragment ProductFragment on ProductGQLType {
+  id
+  uuid
+  name
+  code
+  location {
+    id
+    name
+    uuid
+    code
+    parent {
+      id
+      name
+      uuid
+      code
+    }
+  }
+  dateFrom
+  dateTo
+  maxMembers
+  validityFrom
+  validityTo
+}
+</stringProp>
+            <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;first&quot;: ${paginationOption4},
+  &quot;name&quot;: ${searchString}
+}</stringProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+              <collectionProp name="CookieManager.cookies">
+                <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                  <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                  <stringProp name="Cookie.domain">localhost</stringProp>
+                  <stringProp name="Cookie.path">/</stringProp>
+                  <boolProp name="Cookie.secure">false</boolProp>
+                  <longProp name="Cookie.expires">0</longProp>
+                  <boolProp name="Cookie.path_specified">true</boolProp>
+                  <boolProp name="Cookie.domain_specified">true</boolProp>
+                </elementProp>
+              </collectionProp>
+              <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+              <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+            </CookieManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="TS1 Claims" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.delayedStart">false</boolProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+      </ThreadGroup>
+      <hashTree>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="reviewClaimStatus" elementType="Argument">
+              <stringProp name="Argument.name">reviewClaimStatus</stringProp>
+              <stringProp name="Argument.value">4</stringProp>
+              <stringProp name="Argument.desc">Value 4 means SELECTED FOR REVIEW Claim status</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="checkedClaimStatus" elementType="Argument">
+              <stringProp name="Argument.name">checkedClaimStatus</stringProp>
+              <stringProp name="Argument.value">4</stringProp>
+              <stringProp name="Argument.desc">Value 4 means CHECKED Claim status </stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="reviewedStatusInt" elementType="Argument">
+              <stringProp name="Argument.name">reviewedStatusInt</stringProp>
+              <stringProp name="Argument.value">8</stringProp>
+              <stringProp name="Argument.desc">Status of reviewed Claim</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="Authorization" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument" enabled="true">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;username&quot;: &quot;Admin&quot;,
+  &quot;password&quot;: &quot;admin123&quot;
+},&quot;query&quot;:&quot;mutation authenticate($username: String!, $password: String!) {\n            tokenAuth(username: $username, password: $password) {\n              refreshExpiresIn\n            }\n          }&quot;}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+          <stringProp name="HTTPSampler.port">${port}</stringProp>
+          <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+          <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+          <stringProp name="GraphQLHTTPSampler.query">mutation authenticate($username: String!, $password: String!) {
+            tokenAuth(username: $username, password: $password) {
+              refreshExpiresIn
+            }
+          }</stringProp>
+          <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;username&quot;: &quot;Admin&quot;,
+  &quot;password&quot;: &quot;admin123&quot;
+}</stringProp>
+          <boolProp name="HTTPSampler.image_parser">false</boolProp>
+          <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+          <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+          <boolProp name="HTTPSampler.md5">false</boolProp>
+          <intProp name="HTTPSampler.ipSourceType">0</intProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">content-type</stringProp>
+                <stringProp name="Header.value">application/json</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+            <stringProp name="RegexExtractor.useHeaders">true</stringProp>
+            <stringProp name="RegexExtractor.refname">jwtToken</stringProp>
+            <stringProp name="RegexExtractor.regex">JWT=(.*?);</stringProp>
+            <stringProp name="RegexExtractor.template">$1$</stringProp>
+            <stringProp name="RegexExtractor.default">NotFound</stringProp>
+            <stringProp name="RegexExtractor.match_number">1</stringProp>
+            <boolProp name="RegexExtractor.default_empty_value">false</boolProp>
+          </RegexExtractor>
+          <hashTree/>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="‘Get paginated’ claims query" enabled="true">
+          <stringProp name="TestPlan.comments">Description: Tests response time for query
+Prerequisites: Data set dependent on workload profile
+Steps: Run query or user loading claims list on frontend
+Data Inputs: -
+Expected Outcomes: Successful query or loaded claims list on frontend
+Metrics to Monitor: Response time and resource utilization
+Exit Criteria: Metrics met values from metrics paragraph
+</stringProp>
+        </GenericController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="claims query 10" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument" enabled="true">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;first&quot;: ${paginationOption1}
+},&quot;query&quot;:&quot;query ($first: Int) {\n  claims(orderBy: [\&quot;-dateClaimed\&quot;], first: $first) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        uuid\n        code\n        jsonExt\n        dateClaimed\n        dateProcessed\n        feedbackStatus\n        reviewStatus\n        claimed\n        approved\n        status\n        restore {\n          id\n        }\n        healthFacility {\n          id\n          uuid\n          name\n          code\n        }\n        insuree {\n          id\n          uuid\n          chfId\n          lastName\n          otherNames\n          dob\n        }\n        attachmentsCount\n      }\n    }\n  }\n}&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+            <stringProp name="GraphQLHTTPSampler.query">query ($first: Int) {
+  claims(orderBy: [&quot;-dateClaimed&quot;], first: $first) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        uuid
+        code
+        jsonExt
+        dateClaimed
+        dateProcessed
+        feedbackStatus
+        reviewStatus
+        claimed
+        approved
+        status
+        restore {
+          id
+        }
+        healthFacility {
+          id
+          uuid
+          name
+          code
+        }
+        insuree {
+          id
+          uuid
+          chfId
+          lastName
+          otherNames
+          dob
+        }
+        attachmentsCount
+      }
+    }
+  }
+}
+</stringProp>
+            <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;first&quot;: ${paginationOption1}
+}</stringProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+              <collectionProp name="CookieManager.cookies">
+                <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                  <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                  <stringProp name="Cookie.domain">localhost</stringProp>
+                  <stringProp name="Cookie.path">/</stringProp>
+                  <boolProp name="Cookie.secure">false</boolProp>
+                  <longProp name="Cookie.expires">0</longProp>
+                  <boolProp name="Cookie.path_specified">true</boolProp>
+                  <boolProp name="Cookie.domain_specified">true</boolProp>
+                </elementProp>
+              </collectionProp>
+              <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+              <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+            </CookieManager>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="claims query 20" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument" enabled="true">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;first&quot;: ${paginationOption2}
+},&quot;query&quot;:&quot;query ($first: Int) {\n  claims(orderBy: [\&quot;-dateClaimed\&quot;], first: $first) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        uuid\n        code\n        jsonExt\n        dateClaimed\n        dateProcessed\n        feedbackStatus\n        reviewStatus\n        claimed\n        approved\n        status\n        restore {\n          id\n        }\n        healthFacility {\n          id\n          uuid\n          name\n          code\n        }\n        insuree {\n          id\n          uuid\n          chfId\n          lastName\n          otherNames\n          dob\n        }\n        attachmentsCount\n      }\n    }\n  }\n}&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+            <stringProp name="GraphQLHTTPSampler.query">query ($first: Int) {
+  claims(orderBy: [&quot;-dateClaimed&quot;], first: $first) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        uuid
+        code
+        jsonExt
+        dateClaimed
+        dateProcessed
+        feedbackStatus
+        reviewStatus
+        claimed
+        approved
+        status
+        restore {
+          id
+        }
+        healthFacility {
+          id
+          uuid
+          name
+          code
+        }
+        insuree {
+          id
+          uuid
+          chfId
+          lastName
+          otherNames
+          dob
+        }
+        attachmentsCount
+      }
+    }
+  }
+}
+</stringProp>
+            <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;first&quot;: ${paginationOption2}
+}</stringProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+              <collectionProp name="CookieManager.cookies">
+                <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                  <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                  <stringProp name="Cookie.domain">localhost</stringProp>
+                  <stringProp name="Cookie.path">/</stringProp>
+                  <boolProp name="Cookie.secure">false</boolProp>
+                  <longProp name="Cookie.expires">0</longProp>
+                  <boolProp name="Cookie.path_specified">true</boolProp>
+                  <boolProp name="Cookie.domain_specified">true</boolProp>
+                </elementProp>
+              </collectionProp>
+              <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+              <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+            </CookieManager>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="claims query 50" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument" enabled="true">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;first&quot;: ${paginationOption3}
+},&quot;query&quot;:&quot;query ($first: Int) {\n  claims(orderBy: [\&quot;-dateClaimed\&quot;], first: $first) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        uuid\n        code\n        jsonExt\n        dateClaimed\n        dateProcessed\n        feedbackStatus\n        reviewStatus\n        claimed\n        approved\n        status\n        restore {\n          id\n        }\n        healthFacility {\n          id\n          uuid\n          name\n          code\n        }\n        insuree {\n          id\n          uuid\n          chfId\n          lastName\n          otherNames\n          dob\n        }\n        attachmentsCount\n      }\n    }\n  }\n}&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+            <stringProp name="GraphQLHTTPSampler.query">query ($first: Int) {
+  claims(orderBy: [&quot;-dateClaimed&quot;], first: $first) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        uuid
+        code
+        jsonExt
+        dateClaimed
+        dateProcessed
+        feedbackStatus
+        reviewStatus
+        claimed
+        approved
+        status
+        restore {
+          id
+        }
+        healthFacility {
+          id
+          uuid
+          name
+          code
+        }
+        insuree {
+          id
+          uuid
+          chfId
+          lastName
+          otherNames
+          dob
+        }
+        attachmentsCount
+      }
+    }
+  }
+}
+</stringProp>
+            <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;first&quot;: ${paginationOption3}
+}</stringProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+              <collectionProp name="CookieManager.cookies">
+                <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                  <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                  <stringProp name="Cookie.domain">localhost</stringProp>
+                  <stringProp name="Cookie.path">/</stringProp>
+                  <boolProp name="Cookie.secure">false</boolProp>
+                  <longProp name="Cookie.expires">0</longProp>
+                  <boolProp name="Cookie.path_specified">true</boolProp>
+                  <boolProp name="Cookie.domain_specified">true</boolProp>
+                </elementProp>
+              </collectionProp>
+              <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+              <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+            </CookieManager>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="claims query 100" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument" enabled="true">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;first&quot;: ${paginationOption4}
+},&quot;query&quot;:&quot;query ($first: Int) {\n  claims(orderBy: [\&quot;-dateClaimed\&quot;], first: $first) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        uuid\n        code\n        jsonExt\n        dateClaimed\n        dateProcessed\n        feedbackStatus\n        reviewStatus\n        claimed\n        approved\n        status\n        restore {\n          id\n        }\n        healthFacility {\n          id\n          uuid\n          name\n          code\n        }\n        insuree {\n          id\n          uuid\n          chfId\n          lastName\n          otherNames\n          dob\n        }\n        attachmentsCount\n      }\n    }\n  }\n}&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+            <stringProp name="GraphQLHTTPSampler.query">query ($first: Int) {
+  claims(orderBy: [&quot;-dateClaimed&quot;], first: $first) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        uuid
+        code
+        jsonExt
+        dateClaimed
+        dateProcessed
+        feedbackStatus
+        reviewStatus
+        claimed
+        approved
+        status
+        restore {
+          id
+        }
+        healthFacility {
+          id
+          uuid
+          name
+          code
+        }
+        insuree {
+          id
+          uuid
+          chfId
+          lastName
+          otherNames
+          dob
+        }
+        attachmentsCount
+      }
+    }
+  }
+}
+</stringProp>
+            <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;first&quot;: ${paginationOption4}
+}</stringProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+              <collectionProp name="CookieManager.cookies">
+                <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                  <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                  <stringProp name="Cookie.domain">localhost</stringProp>
+                  <stringProp name="Cookie.path">/</stringProp>
+                  <boolProp name="Cookie.secure">false</boolProp>
+                  <longProp name="Cookie.expires">0</longProp>
+                  <boolProp name="Cookie.path_specified">true</boolProp>
+                  <boolProp name="Cookie.domain_specified">true</boolProp>
+                </elementProp>
+              </collectionProp>
+              <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+              <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+            </CookieManager>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Process claim/s" enabled="true">
+          <stringProp name="TestPlan.comments">Description: Tests response time and resource utilization for multiple claims
+Prerequisites: Given that the claim is in &quot;checked status&quot; and the user is on the claim review overview page
+Steps:Click anywhere on the row of the claims you want to process. Select single or multiple claims. The header will show the number of claims selected. -&gt; Click on 3 dots -&gt; Click on process selected
+Data Inputs: -
+Expected Outcomes:The background of that row is now grey-lined, status changed to valuated
+Metrics to Monitor: Response time and resource utilization
+Exit Criteria: Metrics met values from metrics paragraph</stringProp>
+        </GenericController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="get 4 claims with status checked" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument" enabled="true">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;first&quot;: 4,
+  &quot;status&quot;: ${checkedClaimStatus}
+},&quot;query&quot;:&quot;query ($first: Int, $status: Int) {\n  claims(orderBy: [\&quot;-dateClaimed\&quot;], first: $first, status: $status) {\n    totalCount\n    edges {\n      node {\n        uuid\n      }\n    }\n  }\n}&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+            <stringProp name="GraphQLHTTPSampler.query">query ($first: Int, $status: Int) {
+  claims(orderBy: [&quot;-dateClaimed&quot;], first: $first, status: $status) {
+    totalCount
+    edges {
+      node {
+        uuid
+      }
+    }
+  }
+}
+</stringProp>
+            <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;first&quot;: 4,
+  &quot;status&quot;: ${checkedClaimStatus}
+}</stringProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+              <collectionProp name="CookieManager.cookies">
+                <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                  <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                  <stringProp name="Cookie.domain">localhost</stringProp>
+                  <stringProp name="Cookie.path">/</stringProp>
+                  <boolProp name="Cookie.secure">false</boolProp>
+                  <longProp name="Cookie.expires">0</longProp>
+                  <boolProp name="Cookie.path_specified">true</boolProp>
+                  <boolProp name="Cookie.domain_specified">true</boolProp>
+                </elementProp>
+              </collectionProp>
+              <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+              <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+            </CookieManager>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">uuid1;uuid2;uuid3;uuid4</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.claims.edges[0].node.uuid;$.data.claims.edges[1].node.uuid;$.data.claims.edges[2].node.uuid;$.data.claims.edges[3].node.uuid</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">NOT_FOUND;NOT_FOUND;NOT_FOUND;NOT_FOUND</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If uuid1" enabled="true">
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(&quot;${uuid1}&quot; != &quot;NOT_FOUND&quot;,)}</stringProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="Process one claim" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument" enabled="true">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;uuids&quot;: [&quot;${uuid1}&quot;]
+},&quot;query&quot;:&quot;mutation ProcessClaims(\n  $uuids: [String!]!\n) {\n  processClaims(\n    input: {\n      uuids: $uuids\n    }\n  ) {\n    clientMutationId\n    internalId\n  }\n}&quot;}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+              <stringProp name="HTTPSampler.port">${port}</stringProp>
+              <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+              <stringProp name="GraphQLHTTPSampler.query">mutation ProcessClaims(
+  $uuids: [String!]!
+) {
+  processClaims(
+    input: {
+      uuids: $uuids
+    }
+  ) {
+    clientMutationId
+    internalId
+  }
+}</stringProp>
+              <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;uuids&quot;: [&quot;${uuid1}&quot;]
+}</stringProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">content-type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+                <collectionProp name="CookieManager.cookies">
+                  <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                    <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                    <stringProp name="Cookie.domain">localhost</stringProp>
+                    <stringProp name="Cookie.path">/</stringProp>
+                    <boolProp name="Cookie.secure">false</boolProp>
+                    <longProp name="Cookie.expires">0</longProp>
+                    <boolProp name="Cookie.path_specified">true</boolProp>
+                    <boolProp name="Cookie.domain_specified">true</boolProp>
+                  </elementProp>
+                </collectionProp>
+                <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+                <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+              </CookieManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="id uuids" enabled="true">
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(&quot;${uuid3}&quot; != &quot;NOT_FOUND&quot;,)}</stringProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="Process multiple claims (3)" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument" enabled="true">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;uuids&quot;: [&quot;${uuid2}&quot;, &quot;${uuid3}&quot;, &quot;${uuid4}&quot;]
+},&quot;query&quot;:&quot;mutation ProcessClaims(\n  $uuids: [String!]!\n) {\n  processClaims(\n    input: {\n      uuids: $uuids\n    }\n  ) {\n    clientMutationId\n    internalId\n  }\n}&quot;}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+              <stringProp name="HTTPSampler.port">${port}</stringProp>
+              <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+              <stringProp name="GraphQLHTTPSampler.query">mutation ProcessClaims(
+  $uuids: [String!]!
+) {
+  processClaims(
+    input: {
+      uuids: $uuids
+    }
+  ) {
+    clientMutationId
+    internalId
+  }
+}</stringProp>
+              <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;uuids&quot;: [&quot;${uuid2}&quot;, &quot;${uuid3}&quot;, &quot;${uuid4}&quot;]
+}</stringProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">content-type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+                <collectionProp name="CookieManager.cookies">
+                  <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                    <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                    <stringProp name="Cookie.domain">localhost</stringProp>
+                    <stringProp name="Cookie.path">/</stringProp>
+                    <boolProp name="Cookie.secure">false</boolProp>
+                    <longProp name="Cookie.expires">0</longProp>
+                    <boolProp name="Cookie.path_specified">true</boolProp>
+                    <boolProp name="Cookie.domain_specified">true</boolProp>
+                  </elementProp>
+                </collectionProp>
+                <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+                <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+              </CookieManager>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Claim review " enabled="true">
+          <stringProp name="TestPlan.comments">Description: Test to check submitting claim review
+Prerequisites: Given that the claim is in &quot;checked&quot; status and &quot;selected for review&quot;. The use is on the claim review overview page
+Steps: Run query or user loading claims list on frontend
+Data Inputs: -
+Expected Outcomes: User is taken bank to the claim overview page and the review status of that claim is ‘delivered’
+Metrics to Monitor: Response time and resource utilization
+Exit Criteria: Response time is below 5 sec and resource utilization is below 90%</stringProp>
+        </GenericController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="get claim ready to be reviewed" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument" enabled="true">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;first&quot;: 1,
+  &quot;status&quot;: ${checkedClaimStatus},
+  &quot;reviewStatus&quot;: ${reviewClaimStatus}
+},&quot;query&quot;:&quot;query ($first: Int, $status: Int, $reviewStatus: Int) {\n  claims(reviewStatus: $reviewStatus, status: $status, orderBy: [\&quot;-dateClaimed\&quot;], first: $first) {\n    totalCount\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        uuid\n      }\n    }\n  }\n}&quot;}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+            <stringProp name="HTTPSampler.port">${port}</stringProp>
+            <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+            <stringProp name="GraphQLHTTPSampler.query">query ($first: Int, $status: Int, $reviewStatus: Int) {
+  claims(reviewStatus: $reviewStatus, status: $status, orderBy: [&quot;-dateClaimed&quot;], first: $first) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        uuid
+      }
+    }
+  }
+}
+</stringProp>
+            <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;first&quot;: 1,
+  &quot;status&quot;: ${checkedClaimStatus},
+  &quot;reviewStatus&quot;: ${reviewClaimStatus}
+}</stringProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers">
+                <elementProp name="" elementType="Header">
+                  <stringProp name="Header.name">content-type</stringProp>
+                  <stringProp name="Header.value">application/json</stringProp>
+                </elementProp>
+              </collectionProp>
+            </HeaderManager>
+            <hashTree/>
+            <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+              <collectionProp name="CookieManager.cookies">
+                <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                  <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                  <stringProp name="Cookie.domain">localhost</stringProp>
+                  <stringProp name="Cookie.path">/</stringProp>
+                  <boolProp name="Cookie.secure">false</boolProp>
+                  <longProp name="Cookie.expires">0</longProp>
+                  <boolProp name="Cookie.path_specified">true</boolProp>
+                  <boolProp name="Cookie.domain_specified">true</boolProp>
+                </elementProp>
+              </collectionProp>
+              <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+              <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+            </CookieManager>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">uuidForReview</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.claims.edges[0].node.uuid</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+              <stringProp name="JSONPostProcessor.defaultValues">NOT_FOUND</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If uuidForReview" enabled="true">
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+            <boolProp name="IfController.useExpression">true</boolProp>
+            <stringProp name="IfController.condition">${__jexl3(&quot;${uuidForReview}&quot; != &quot;NOT_FOUND&quot;,)}</stringProp>
+          </IfController>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="Deliver review for Claim" enabled="true">
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument" enabled="true">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;uuids&quot;: [&quot;${uuidForReview}&quot;]
+},&quot;query&quot;:&quot;mutation DeliverClaimReview(\n  $uuids: [String!]!\n)  {\n  deliverClaimsReview(\n    input: {uuids: $uuids}\n  ) {\n    clientMutationId\n    internalId\n  }\n}&quot;}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+              <stringProp name="HTTPSampler.port">${port}</stringProp>
+              <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+              <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+              <stringProp name="GraphQLHTTPSampler.query">mutation DeliverClaimReview(
+  $uuids: [String!]!
+)  {
+  deliverClaimsReview(
+    input: {uuids: $uuids}
+  ) {
+    clientMutationId
+    internalId
+  }
+}
+</stringProp>
+              <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;uuids&quot;: [&quot;${uuidForReview}&quot;]
+}</stringProp>
+              <boolProp name="HTTPSampler.image_parser">false</boolProp>
+              <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+              <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+              <boolProp name="HTTPSampler.md5">false</boolProp>
+              <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">content-type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+                <collectionProp name="CookieManager.cookies">
+                  <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                    <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                    <stringProp name="Cookie.domain">localhost</stringProp>
+                    <stringProp name="Cookie.path">/</stringProp>
+                    <boolProp name="Cookie.secure">false</boolProp>
+                    <longProp name="Cookie.expires">0</longProp>
+                    <boolProp name="Cookie.path_specified">true</boolProp>
+                    <boolProp name="Cookie.domain_specified">true</boolProp>
+                  </elementProp>
+                </collectionProp>
+                <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+                <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+              </CookieManager>
+              <hashTree/>
+            </hashTree>
+            <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller" enabled="true">
+              <stringProp name="WhileController.condition">${__groovy((${reviewStatus} != ${reviewedStatusInt}) &amp;&amp; (${counter} &lt; 10),)}
+
+</stringProp>
+              <stringProp name="TestPlan.comments">If it doesn&apos;t get REVIEW DELIVERED status in 5 second assertion fails</stringProp>
+            </WhileController>
+            <hashTree>
+              <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="true">
+                <stringProp name="CounterConfig.start">1</stringProp>
+                <stringProp name="CounterConfig.end">10</stringProp>
+                <stringProp name="CounterConfig.incr">1</stringProp>
+                <stringProp name="CounterConfig.name">counter</stringProp>
+                <stringProp name="CounterConfig.format"></stringProp>
+                <boolProp name="CounterConfig.per_user">true</boolProp>
+                <boolProp name="CounterConfig.reset_on_tg_iteration">true</boolProp>
+              </CounterConfig>
+              <hashTree/>
+              <HTTPSamplerProxy guiclass="GraphQLHTTPSamplerGui" testclass="HTTPSamplerProxy" testname="Get reviewed claim" enabled="true">
+                <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+                <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                  <collectionProp name="Arguments.arguments">
+                    <elementProp name="" elementType="HTTPArgument" enabled="true">
+                      <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                      <stringProp name="Argument.value">{&quot;operationName&quot;:null,&quot;variables&quot;:{
+  &quot;uuid&quot;: &quot;${uuidForReview}&quot;
+},&quot;query&quot;:&quot;query ($uuid: String) {\n  claims(uuid: $uuid) {\n    totalCount\n    edges {\n      node {\n        uuid\n        reviewStatus\n      }\n    }\n  }\n}&quot;}</stringProp>
+                      <stringProp name="Argument.metadata">=</stringProp>
+                      <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    </elementProp>
+                  </collectionProp>
+                </elementProp>
+                <stringProp name="HTTPSampler.domain">${hostname}</stringProp>
+                <stringProp name="HTTPSampler.port">${port}</stringProp>
+                <stringProp name="HTTPSampler.path">${graphqlPath}</stringProp>
+                <stringProp name="HTTPSampler.method">POST</stringProp>
+                <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+                <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+                <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+                <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+                <stringProp name="GraphQLHTTPSampler.operationName"></stringProp>
+                <stringProp name="GraphQLHTTPSampler.query">query ($uuid: String) {
+  claims(uuid: $uuid) {
+    totalCount
+    edges {
+      node {
+        uuid
+        reviewStatus
+      }
+    }
+  }
+}
+</stringProp>
+                <stringProp name="GraphQLHTTPSampler.variables">{
+  &quot;uuid&quot;: &quot;${uuidForReview}&quot;
+}</stringProp>
+                <boolProp name="HTTPSampler.image_parser">false</boolProp>
+                <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+                <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+                <boolProp name="HTTPSampler.md5">false</boolProp>
+                <intProp name="HTTPSampler.ipSourceType">0</intProp>
+              </HTTPSamplerProxy>
+              <hashTree>
+                <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                  <collectionProp name="HeaderManager.headers">
+                    <elementProp name="" elementType="Header">
+                      <stringProp name="Header.name">content-type</stringProp>
+                      <stringProp name="Header.value">application/json</stringProp>
+                    </elementProp>
+                  </collectionProp>
+                </HeaderManager>
+                <hashTree/>
+                <CookieManager guiclass="CookiePanel" testclass="CookieManager" testname="HTTP Cookie Manager" enabled="true">
+                  <collectionProp name="CookieManager.cookies">
+                    <elementProp name="JWT" elementType="Cookie" testname="JWT">
+                      <stringProp name="Cookie.value">${jwtToken}</stringProp>
+                      <stringProp name="Cookie.domain">localhost</stringProp>
+                      <stringProp name="Cookie.path">/</stringProp>
+                      <boolProp name="Cookie.secure">false</boolProp>
+                      <longProp name="Cookie.expires">0</longProp>
+                      <boolProp name="Cookie.path_specified">true</boolProp>
+                      <boolProp name="Cookie.domain_specified">true</boolProp>
+                    </elementProp>
+                  </collectionProp>
+                  <boolProp name="CookieManager.clearEachIteration">false</boolProp>
+                  <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
+                </CookieManager>
+                <hashTree/>
+                <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+                  <stringProp name="JSONPostProcessor.referenceNames">reviewStatus</stringProp>
+                  <stringProp name="JSONPostProcessor.jsonPathExprs">$.data.claims.edges[0].node.reviewStatus</stringProp>
+                  <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+                  <stringProp name="JSONPostProcessor.defaultValues">-1</stringProp>
+                </JSONPostProcessor>
+                <hashTree/>
+              </hashTree>
+              <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+                <stringProp name="ConstantTimer.delay">500</stringProp>
+              </ConstantTimer>
+              <hashTree/>
+              <JSONPathAssertion guiclass="JSONPathAssertionGui" testclass="JSONPathAssertion" testname="Assert reviewStatus REVIEW DELIVERED" enabled="true">
+                <stringProp name="JSON_PATH">$.data.claims.edges[0].node.reviewStatus</stringProp>
+                <stringProp name="EXPECTED_VALUE">8</stringProp>
+                <boolProp name="JSONVALIDATION">true</boolProp>
+                <boolProp name="EXPECT_NULL">false</boolProp>
+                <boolProp name="INVERT">false</boolProp>
+                <boolProp name="ISREGEX">true</boolProp>
+              </JSONPathAssertion>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+        </hashTree>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+        <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>false</xml>
+              <fieldNames>true</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>0</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <sentBytes>true</sentBytes>
+              <url>true</url>
+              <threadCounts>true</threadCounts>
+              <idleTime>true</idleTime>
+              <connectTime>true</connectTime>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
